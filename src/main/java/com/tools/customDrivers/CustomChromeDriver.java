@@ -1,8 +1,7 @@
 package com.tools.customDrivers;
 
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
-
-import net.thucydides.core.webdriver.DriverSource;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -10,8 +9,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import com.tools.constants.Constants;
 
-public class CustomChromeDriver implements DriverSource {
-
+public class CustomChromeDriver {
     @Override
     public WebDriver newDriver() {
         return setCustomChrome();
@@ -25,8 +23,12 @@ public class CustomChromeDriver implements DriverSource {
     private WebDriver setCustomChrome() {
         System.out.println("Custom chrome driver instance is created now...");
         System.setProperty("webdriver.chrome.driver", Constants.WEB_DRIVERS_PATH + "chromedriver.exe");
+        HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
+        chromePrefs.put("download.default_directory", Constants.DOWNLOAD_FILE_PATH_FOR_ZIP);
+        chromePrefs.put("profile.default_content_settings.popups", 2);
 
         ChromeOptions options = new ChromeOptions();
+        options.setExperimentalOption("prefs", chromePrefs);
         options.addArguments("start-maximized");
         options.addArguments("disable-infobars");
         options.addArguments("--disable-web-security");

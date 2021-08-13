@@ -2,7 +2,7 @@ package com.tools.factories;
 
 import net.bytebuddy.utility.RandomString;
 
-import com.tools.entities.Card;
+import com.tools.models.Card;
 
 public class CardFactory {
     public static Card getCardInstance(String boardListId) {

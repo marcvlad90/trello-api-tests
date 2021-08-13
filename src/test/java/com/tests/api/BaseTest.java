@@ -8,15 +8,19 @@ import org.junit.After;
 import org.junit.Before;
 
 import com.steps.api.BoardApiSteps;
+import com.steps.api.CardApiSteps;
+import com.steps.api.ListApiSteps;
 
 public class BaseTest extends TestCase {
     @Steps
-    private BoardApiSteps boardApiSteps;
+    protected BoardApiSteps boardApiSteps;
+    @Steps
+    protected CardApiSteps cardApiSteps;
+    @Steps
+    protected ListApiSteps listApiSteps;
 
     @Before
     public void setup() {
-        //        System.setProperty("http.proxyHost", "localhost");
-        //        System.setProperty("http.proxyPort", "8080");
         //        System.setProperty("https.proxyHost", "localhost");
         //        System.setProperty("https.proxyPort", "8080");
         System.setProperty("env", "test-env");

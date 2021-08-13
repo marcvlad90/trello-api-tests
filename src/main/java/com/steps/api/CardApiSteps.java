@@ -10,9 +10,9 @@ import org.junit.Assert;
 
 import com.tools.constants.ApiUrlConstants;
 import com.tools.constants.SerenityKeyConstants;
-import com.tools.entities.Card;
-import com.tools.entities.List;
 import com.tools.factories.CardFactory;
+import com.tools.models.Card;
+import com.tools.models.List;
 import com.tools.utils.InstanceUtils;
 import com.tools.utils.SerenitySessionUtils;
 

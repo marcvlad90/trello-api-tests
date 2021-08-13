@@ -14,12 +14,12 @@ import com.tools.constants.ApiUrlConstants;
 import com.tools.constants.SerenityKeyConstants;
 import com.tools.email.EmailProcessor;
 import com.tools.email.GmailService;
-import com.tools.entities.Board;
-import com.tools.entities.BoardList;
-import com.tools.entities.Card;
-import com.tools.entities.Mail;
 import com.tools.factories.BoardFactory;
 import com.tools.factories.CardFactory;
+import com.tools.models.Board;
+import com.tools.models.BoardList;
+import com.tools.models.Card;
+import com.tools.models.Mail;
 import com.tools.utils.InstanceUtils;
 import com.tools.utils.SerenitySessionUtils;
 

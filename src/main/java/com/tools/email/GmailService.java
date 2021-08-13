@@ -16,7 +16,7 @@ import javax.mail.internet.MimeMultipart;
 
 import org.jsoup.Jsoup;
 
-import com.tools.entities.Mail;
+import com.tools.models.Mail;
 public class GmailService implements EmailService {
 
     private String getTextFromMessage(Message message) throws Exception {

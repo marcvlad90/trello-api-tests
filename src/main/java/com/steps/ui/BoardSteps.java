@@ -7,7 +7,7 @@ import org.junit.Assert;
 
 import com.pages.BoardPage;
 import com.tools.constants.SerenityKeyConstants;
-import com.tools.entities.List;
+import com.tools.models.List;
 import com.tools.utils.SerenitySessionUtils;
 
 public class BoardSteps extends ScenarioSteps {

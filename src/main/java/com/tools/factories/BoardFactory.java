@@ -2,7 +2,7 @@ package com.tools.factories;
 
 import net.bytebuddy.utility.RandomString;
 
-import com.tools.entities.Board;
+import com.tools.models.Board;
 
 public class BoardFactory {
     public static Board getBoardInstance() {

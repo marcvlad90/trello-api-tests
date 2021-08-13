@@ -5,7 +5,7 @@ import net.thucydides.core.steps.ScenarioSteps;
 
 import com.pages.BoardsPage;
 import com.tools.constants.SerenityKeyConstants;
-import com.tools.entities.Board;
+import com.tools.models.Board;
 import com.tools.utils.SerenitySessionUtils;
 
 public class BoardsSteps extends ScenarioSteps {

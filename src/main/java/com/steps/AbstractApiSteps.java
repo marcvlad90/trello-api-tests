@@ -61,11 +61,11 @@ public class AbstractApiSteps extends ScenarioSteps {
         .assertThat().statusCode(anyOf(is(201), is(200), is(302)));
     }
 
-    protected static void deleteResource(String path, String... params) {
+    protected static void deleteResource(String path, String param) {
         given().relaxedHTTPSValidation()
         .spec(getSpecWithExtraHeaders())
         .body(getCommonBodyParams())
-        .when().delete(path, params)
+                .when().delete(path, param)
         .then()
         .assertThat().statusCode(anyOf(is(201), is(200), is(302)));
     }

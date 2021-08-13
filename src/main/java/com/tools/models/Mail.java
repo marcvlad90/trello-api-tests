@@ -1,4 +1,4 @@
-package com.tools.entities;
+package com.tools.models;
 
 public class Mail {
     private String sender;

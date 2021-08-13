@@ -2,7 +2,7 @@ package com.tools.email;
 
 import java.util.List;
 
-import com.tools.entities.Mail;
+import com.tools.models.Mail;
 
 public class EmailProcessor {
     private EmailService emailService;

@@ -10,7 +10,7 @@ import com.tools.constants.EnvironmentConstants;
 @RunWith(SerenityRunner.class)
 public class Test004ApiEmailIntegration extends BaseTest {
     @Test
-    public void emailIntegration() {
+    public void test004ApiEmailIntegration() {
         boardApiSteps.inviteMemberToBoard(boardName, EnvironmentConstants.SECONDARY_USERNAME);
         boardApiSteps.deleteBoard(boardName);
         boardApiSteps

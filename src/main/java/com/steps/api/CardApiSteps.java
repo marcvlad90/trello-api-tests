@@ -2,85 +2,88 @@ package com.steps.api;
 
 import java.util.Map;
 
-import net.bytebuddy.utility.RandomString;
 import net.thucydides.core.annotations.Step;
 import net.thucydides.core.annotations.Steps;
 
 import org.junit.Assert;
 
+import com.dao.card.CardDao;
+import com.dao.list.ListDao;
+import com.google.inject.Inject;
 import com.tools.constants.ApiUrlConstants;
-import com.tools.constants.SerenityKeyConstants;
 import com.tools.factories.CardFactory;
 import com.tools.models.Card;
 import com.tools.models.List;
 import com.tools.utils.InstanceUtils;
-import com.tools.utils.SerenitySessionUtils;
 
 public class CardApiSteps extends AbstractApiSteps {
     private static final long serialVersionUID = 1L;
     @Steps
-    BoardApiSteps boardApiSteps;
+    private BoardApiSteps boardApiSteps;
+    @Inject
+    ListDao listDao;
+    @Inject
+    CardDao cardDao;
 
     @Step
-    public void createCard() {
-        Card cardRequest = CardFactory.getCardInstance(boardApiSteps.getBoardRandomListId());
+    public void createCard(String listName, String cardName) {
+        List list = listDao.getListByName(listName);
+        Card cardRequest = CardFactory.getCardInstance(list.getId(), cardName);
         Map<String, String> bodyParams = getCommonBodyParams();
         bodyParams.put("name", cardRequest.getName());
         bodyParams.put("idList", cardRequest.getBoardListId());
-
         Card cardResponse = createResource(ApiUrlConstants.CARD_CREATE, bodyParams, Card.class);
+
         InstanceUtils.mergeObjects(cardRequest, cardResponse);
-        SerenitySessionUtils.putOnSession(SerenityKeyConstants.LAST_CREATED_CARD, cardRequest);
+        cardDao.saveCard(cardRequest);
     }
 
     @Step
-    public void updateCardList() {
-        Card cardRequest = SerenitySessionUtils.getFromSession(SerenityKeyConstants.LAST_CREATED_CARD);
-        List list = SerenitySessionUtils.getFromSession(SerenityKeyConstants.LAST_CREATED_LIST);
+    public void updateCardList(String cardName, String newListName) {
+        Card cardRequest = cardDao.getCardByName(cardName);
+        List list = listDao.getListByName(newListName);
         cardRequest.setBoardListId(list.getId());
         Map<String, String> bodyParams = getCommonBodyParams();
         bodyParams.put("idList", list.getId());
         updateResource(ApiUrlConstants.CARD_GET, bodyParams, cardRequest.getId());
 
-        SerenitySessionUtils.putOnSession(SerenityKeyConstants.LAST_CREATED_CARD, cardRequest);
+        cardDao.updateCard(cardName, cardRequest);
     }
 
     @Step
-    public void updateCardName() {
-        Card cardRequest = SerenitySessionUtils.getFromSession(SerenityKeyConstants.LAST_CREATED_CARD);
-        String newName = RandomString.make(15);
+    public void updateCardName(String name, String newName) {
+        Card cardRequest = cardDao.getCardByName(name);
         Map<String, String> bodyParams = getCommonBodyParams();
         bodyParams.put("name", newName);
 
         updateResource(ApiUrlConstants.CARD_GET, bodyParams, cardRequest.getId());
 
         cardRequest.setName(newName);
-        SerenitySessionUtils.putOnSession(SerenityKeyConstants.LAST_CREATED_CARD, cardRequest);
+        cardDao.updateCard(newName, cardRequest);
     }
 
     @Step
-    public void deleteCard() {
-        Card cardRequest = SerenitySessionUtils.getFromSession(SerenityKeyConstants.LAST_CREATED_CARD);
-
+    public void deleteCard(String name) {
+        Card cardRequest = cardDao.getCardByName(name);
         deleteResource(ApiUrlConstants.CARD_GET, cardRequest.getId());
     }
 
-    public Card getCardFromServer() {
-        Card expectedCard = SerenitySessionUtils.getFromSession(SerenityKeyConstants.LAST_CREATED_CARD);
+    public Card getCardFromServer(String name) {
+        Card expectedCard = cardDao.getCardByName(name);
         return getResource(ApiUrlConstants.CARD_GET, Card.class, expectedCard.getId());
     }
 
     @Step
-    public void verifyCardIsPresent() {
-        Assert.assertTrue("Card is not present!", SerenitySessionUtils.getFromSession(SerenityKeyConstants.LAST_CREATED_CARD).equals(getCardFromServer()));
+    public void verifyCardIsPresent(String name) {
+        Assert.assertTrue("Card is not present!", cardDao.getCardByName(name).equals(getCardFromServer(name)));
     }
 
     @Step
-    public void verifyCardIsNotPresent() {
-        Card expectedCard = SerenitySessionUtils.getFromSession(SerenityKeyConstants.LAST_CREATED_CARD);
+    public void verifyCardIsNotPresent(String name) {
+        Card expectedCard = cardDao.getCardByName(name);
 
         Assert.assertTrue("Card is not present!",
-                getNotFoundResourceMessage(ApiUrlConstants.CARD_GET, expectedCard.getId()).equals(
+                getNotFoundResourceMessage(ApiUrlConstants.CARD_GET, getCommonBodyParams(), expectedCard.getId()).equals(
                         "The requested resource was not found."));
     }
 }

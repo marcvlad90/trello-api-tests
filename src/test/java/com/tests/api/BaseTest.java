@@ -1,6 +1,7 @@
 package com.tests.api;
 
 import junit.framework.TestCase;
+import net.bytebuddy.utility.RandomString;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.core.steps.StepEventBus;
 
@@ -18,19 +19,20 @@ public class BaseTest extends TestCase {
     protected CardApiSteps cardApiSteps;
     @Steps
     protected ListApiSteps listApiSteps;
+    protected String boardName = RandomString.make(10);
 
     @Before
     public void setup() {
-        //        System.setProperty("https.proxyHost", "localhost");
-        //        System.setProperty("https.proxyPort", "8080");
+        System.setProperty("https.proxyHost", "localhost");
+        System.setProperty("https.proxyPort", "8080");
         System.setProperty("env", "test-env");
-        boardApiSteps.createBoard();
+        boardApiSteps.createBoard(boardName);
     }
 
     @Override
     @After
     public void tearDown() {
         StepEventBus.getEventBus().clearStepFailures();
-        boardApiSteps.deleteBoard();
+        boardApiSteps.deleteBoard(boardName);
     }
 }

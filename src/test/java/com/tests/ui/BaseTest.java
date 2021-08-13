@@ -1,6 +1,7 @@
 package com.tests.ui;
 
 import junit.framework.TestCase;
+import net.bytebuddy.utility.RandomString;
 import net.thucydides.core.annotations.Managed;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.core.steps.StepEventBus;
@@ -12,10 +13,12 @@ import org.openqa.selenium.WebDriver;
 import com.steps.api.BoardApiSteps;
 
 public class BaseTest extends TestCase {
+
     @Managed(uniqueSession = true)
-    WebDriver webdriver;
+    protected WebDriver webdriver;
     @Steps
     private BoardApiSteps boardApiSteps;
+    protected String boardName = RandomString.make(10);
 
     @Before
     public void setup() {
@@ -28,6 +31,6 @@ public class BaseTest extends TestCase {
     @After
     public void tearDown() {
         StepEventBus.getEventBus().clearStepFailures();
-        boardApiSteps.deleteBoard();
+        boardApiSteps.deleteBoard(boardName);
     }
 }

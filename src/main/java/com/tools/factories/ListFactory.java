@@ -1,14 +1,12 @@
 package com.tools.factories;
 
-import net.bytebuddy.utility.RandomString;
-
 import com.tools.models.List;
 
 public class ListFactory {
-    public static List getListInstance(String boardId) {
+    public static List getListInstance(String boardId, String name) {
         List list = new List();
         list.setBoardId(boardId);
-        list.setName(RandomString.make(10));
+        list.setName(name);
         list.setPosition("bottom");
         list.setClosed(false);
         return list;

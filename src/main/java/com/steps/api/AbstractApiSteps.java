@@ -13,10 +13,15 @@ import com.jayway.restassured.builder.RequestSpecBuilder;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.specification.RequestSpecification;
 import com.tools.constants.EnvironmentConstants;
+import com.tools.injector.AppInjector;
 
 public class AbstractApiSteps extends ScenarioSteps {
     private static final long serialVersionUID = 1L;
     public static RequestSpecification specs = null;
+
+    public AbstractApiSteps() {
+        AppInjector.getInjector().injectMembers(this);
+    }
 
     public static Map<String, String> getCommonBodyParams() {
         Map<String, String> bodyParams = new HashMap<String, String>();
@@ -43,10 +48,10 @@ public class AbstractApiSteps extends ScenarioSteps {
                 .extract().as(responseClass);
     }
 
-    protected static String getNotFoundResourceMessage(String path, Object... params) {
+    protected static String getNotFoundResourceMessage(String path, Object bodyParams, Object... params) {
         return given().relaxedHTTPSValidation()
                 .spec(getSpecWithExtraHeaders())
-                .body(getCommonBodyParams())
+                .body(bodyParams)
                 .when().get(path, params)
                 .then()
                 .assertThat().statusCode(404).extract().asString();
@@ -61,11 +66,11 @@ public class AbstractApiSteps extends ScenarioSteps {
         .assertThat().statusCode(anyOf(is(201), is(200), is(302)));
     }
 
-    protected static void deleteResource(String path, Object... params) {
+    protected static void deleteResource(String path, String param) {
         given().relaxedHTTPSValidation()
         .spec(getSpecWithExtraHeaders())
         .body(getCommonBodyParams())
-        .when().delete(path, params)
+        .when().delete(path, param)
         .then()
         .assertThat().statusCode(anyOf(is(201), is(200), is(302)));
     }

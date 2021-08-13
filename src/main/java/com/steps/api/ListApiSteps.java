@@ -2,26 +2,30 @@ package com.steps.api;
 
 import java.util.Map;
 
-import net.bytebuddy.utility.RandomString;
 import net.thucydides.core.annotations.Step;
 
 import org.junit.Assert;
 
+import com.dao.board.BoardDao;
+import com.dao.list.ListDao;
+import com.google.inject.Inject;
 import com.tools.constants.ApiUrlConstants;
-import com.tools.constants.SerenityKeyConstants;
 import com.tools.factories.ListFactory;
 import com.tools.models.Board;
 import com.tools.models.List;
 import com.tools.utils.InstanceUtils;
-import com.tools.utils.SerenitySessionUtils;
 
 public class ListApiSteps extends AbstractApiSteps {
     private static final long serialVersionUID = 1L;
+    @Inject
+    private BoardDao boardDao;
+    @Inject
+    public ListDao listDao;
 
     @Step
-    public void addListInTheLastCreatedBoard() {
-        Board board = SerenitySessionUtils.getFromSession(SerenityKeyConstants.LAST_CREATED_BOARD);
-        List listRequest = ListFactory.getListInstance(board.getId());
+    public void createList(String boardName, String listName) {
+        Board board = boardDao.getBoardByName(boardName);
+        List listRequest = ListFactory.getListInstance(board.getId(), listName);
         Map<String, String> bodyParams = getCommonBodyParams();
         bodyParams.put("name", listRequest.getName());
         bodyParams.put("pos", listRequest.getPosition());
@@ -29,46 +33,59 @@ public class ListApiSteps extends AbstractApiSteps {
         List listResponse = createResource(ApiUrlConstants.LIST_CREATE, bodyParams, List.class);
 
         InstanceUtils.mergeObjects(listRequest, listResponse);
-        SerenitySessionUtils.putOnSession(SerenityKeyConstants.LAST_CREATED_LIST, listRequest);
+        listDao.saveList(listRequest);
     }
 
     @Step
-    public void updateListName() {
-        List listRequest = SerenitySessionUtils.getFromSession(SerenityKeyConstants.LAST_CREATED_LIST);
-        String newName = RandomString.make(15);
+    public void updateListName(String name, String newName) {
+        List listRequest = listDao.getListByName(name);
         Map<String, String> bodyParams = getCommonBodyParams();
         bodyParams.put("name", newName);
 
         updateResource(ApiUrlConstants.LIST_GET, bodyParams, listRequest.getId());
 
         listRequest.setName(newName);
-        SerenitySessionUtils.putOnSession(SerenityKeyConstants.LAST_CREATED_LIST, listRequest);
+        listDao.updateList(newName, listRequest);
     }
 
     @Step
-    public void archiveList() {
-        List listRequest = SerenitySessionUtils.getFromSession(SerenityKeyConstants.LAST_CREATED_LIST);
+    public void archiveList(String name) {
+        List listRequest = listDao.getListByName(name);
         Map<String, String> bodyParams = getCommonBodyParams();
         bodyParams.put("closed", "true");
 
         updateResource(ApiUrlConstants.LIST_GET, bodyParams, listRequest.getId());
 
         listRequest.setClosed(true);
-        SerenitySessionUtils.putOnSession(SerenityKeyConstants.LAST_CREATED_LIST, listRequest);
+        listDao.updateList(name, listRequest);
     }
 
     @Step
-    public void verifyListIsArchived() {
-        Assert.assertTrue("List is not archived!", getListFromServer().isClosed());
+    public void verifyListIsArchived(String name) {
+        Assert.assertTrue("List is not archived!", getListFromServer(name).isClosed());
     }
 
-    public List getListFromServer() {
-        List expectedList = SerenitySessionUtils.getFromSession(SerenityKeyConstants.LAST_CREATED_LIST);
+    public List getListFromServer(String name) {
+        List expectedList = listDao.getListByName(name);
         return getResource(ApiUrlConstants.LIST_GET, List.class, expectedList.getId());
     }
 
     @Step
-    public void verifyListIsPresent() {
-        Assert.assertTrue("List is not present!", SerenitySessionUtils.getFromSession(SerenityKeyConstants.LAST_CREATED_LIST).equals(getListFromServer()));
+    public void verifyListIsPresent(String name) {
+        Assert.assertTrue("List is not present!", listDao.getListByName(name).equals(getListFromServer(name)));
+    }
+
+    @Step
+    public void addListInBoard(String boardName, String listName) {
+        Board board = boardDao.getBoardByName(boardName);
+        List listRequest = ListFactory.getListInstance(board.getId(), listName);
+        Map<String, String> bodyParams = getCommonBodyParams();
+        bodyParams.put("name", listRequest.getName());
+        bodyParams.put("pos", listRequest.getPosition());
+        bodyParams.put("idBoard", board.getId());
+        List listResponse = createResource(ApiUrlConstants.LIST_CREATE, bodyParams, List.class);
+
+        InstanceUtils.mergeObjects(listRequest, listResponse);
+        listDao.saveList(listRequest);
     }
 }

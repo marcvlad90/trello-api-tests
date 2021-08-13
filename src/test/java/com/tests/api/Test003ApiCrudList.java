@@ -1,5 +1,6 @@
 package com.tests.api;
 
+import net.bytebuddy.utility.RandomString;
 import net.serenitybdd.junit.runners.SerenityRunner;
 
 import org.junit.Test;
@@ -7,16 +8,18 @@ import org.junit.runner.RunWith;
 
 @RunWith(SerenityRunner.class)
 public class Test003ApiCrudList extends BaseTest {
+    private String listName = RandomString.make(10);
+    private String listNewName = RandomString.make(15);
 
     @Test
     public void test003CrudList() {
-        listApiSteps.addListInTheLastCreatedBoard();
-        listApiSteps.verifyListIsPresent();
+        listApiSteps.addListInBoard(boardName, listName);
+        listApiSteps.verifyListIsPresent(listName);
 
-        listApiSteps.updateListName();
-        listApiSteps.verifyListIsPresent();
+        listApiSteps.updateListName(listName, listNewName);
+        listApiSteps.verifyListIsPresent(listNewName);
 
-        listApiSteps.archiveList();
-        listApiSteps.verifyListIsArchived();
+        listApiSteps.archiveList(listNewName);
+        listApiSteps.verifyListIsArchived(listNewName);
     }
 }

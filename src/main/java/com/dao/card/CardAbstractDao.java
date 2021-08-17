@@ -1,4 +1,4 @@
-package dao.card;
+package com.dao.card;
 
 import java.util.List;
 

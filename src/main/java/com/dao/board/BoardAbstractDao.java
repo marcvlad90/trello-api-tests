@@ -1,4 +1,4 @@
-package dao.board;
+package com.dao.board;
 
 import java.util.List;
 
@@ -10,8 +10,6 @@ public interface BoardAbstractDao {
     public Board getBoardByName(String name);
 
     public void saveBoard(Board board);
-
-    public void removeBoard(Board board);
 
     public List<Board> getAllBoards();
 }

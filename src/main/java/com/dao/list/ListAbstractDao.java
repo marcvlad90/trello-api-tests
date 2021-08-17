@@ -1,4 +1,4 @@
-package dao.list;
+package com.dao.list;
 
 import com.google.inject.ImplementedBy;
 import com.tools.models.List;

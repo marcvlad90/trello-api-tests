@@ -7,15 +7,14 @@ import net.thucydides.core.annotations.Steps;
 
 import org.junit.Assert;
 
+import com.dao.card.CardDao;
+import com.dao.list.ListDao;
 import com.google.inject.Inject;
 import com.tools.constants.ApiUrlConstants;
 import com.tools.factories.CardFactory;
 import com.tools.models.Card;
 import com.tools.models.List;
 import com.tools.utils.InstanceUtils;
-
-import dao.card.CardDao;
-import dao.list.ListDao;
 
 public class CardApiSteps extends AbstractApiSteps {
     private static final long serialVersionUID = 1L;

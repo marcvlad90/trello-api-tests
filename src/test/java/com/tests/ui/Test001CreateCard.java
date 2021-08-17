@@ -29,21 +29,25 @@ public class Test001CreateCard extends BaseTest {
     private BoardsSteps boardsSteps;
     @Steps
     private BoardSteps boardSteps;
-    private String listName = RandomString.make(10);
+    private String firstListName = RandomString.make(10);
+    private String secondListName = RandomString.make(10);
     private String cardName = RandomString.make(10);
 
     @Before
     public void dataPrep() {
         boardApiSteps.createBoard(boardName);
-        listApiSteps.addListInBoard(boardName, listName);
+        listApiSteps.addListInBoard(boardName, firstListName);
+        listApiSteps.addListInBoard(boardName, secondListName);
         loginSteps.login();
         boardsSteps.openBoard(boardName);
     }
 
     @Test
     public void test001CreateCard() {
-        boardSteps.addCardInTheList(listName, cardName);
-        boardSteps.checkThatCardIsPresentInTheList(listName, cardName);
+        boardSteps.addCardInTheList(firstListName, cardName);
+        boardSteps.addCardInTheList(secondListName, cardName);
+        boardSteps.checkThatCardIsPresentInTheList(firstListName, cardName);
+        boardSteps.checkThatCardIsPresentInTheList(secondListName, cardName);
     }
 
     @Override

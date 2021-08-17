@@ -6,14 +6,15 @@ import net.thucydides.core.annotations.Step;
 
 import org.junit.Assert;
 
-import com.dao.board.BoardDao;
-import com.dao.list.ListDao;
 import com.google.inject.Inject;
 import com.tools.constants.ApiUrlConstants;
 import com.tools.factories.ListFactory;
 import com.tools.models.Board;
 import com.tools.models.List;
 import com.tools.utils.InstanceUtils;
+
+import dao.board.BoardDao;
+import dao.list.ListDao;
 
 public class ListApiSteps extends AbstractApiSteps {
     private static final long serialVersionUID = 1L;

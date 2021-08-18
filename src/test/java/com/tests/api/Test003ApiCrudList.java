@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(SerenityRunner.class)
-public class Test003ApiCrudList extends BaseTest {
+public class Test003ApiCrudList extends BaseApiTest {
     private String listName = RandomString.make(10);
     private String listNewName = RandomString.make(15);
 

@@ -11,13 +11,25 @@ import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 
 import com.steps.api.BoardApiSteps;
+import com.steps.api.ListApiSteps;
+import com.steps.ui.BoardSteps;
+import com.steps.ui.BoardsSteps;
+import com.steps.ui.LoginSteps;
 
 public class BaseTest extends TestCase {
 
     @Managed(uniqueSession = true)
     protected WebDriver webdriver;
     @Steps
-    private BoardApiSteps boardApiSteps;
+    protected BoardApiSteps boardApiSteps;
+    @Steps
+    protected ListApiSteps listApiSteps;
+    @Steps
+    protected LoginSteps loginSteps;
+    @Steps
+    protected BoardsSteps boardsSteps;
+    @Steps
+    protected BoardSteps boardSteps;
     protected String boardName = RandomString.make(10);
 
     @Before

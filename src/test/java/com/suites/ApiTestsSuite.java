@@ -18,6 +18,6 @@ import com.tests.api.Test004ApiEmailIntegration;
     Test004ApiEmailIntegration.class,
     DataDeletion.class,
 })
-public class TestsSuite {
+public class ApiTestsSuite {
 
 }

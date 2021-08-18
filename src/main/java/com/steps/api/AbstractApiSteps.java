@@ -32,7 +32,7 @@ public class AbstractApiSteps extends ScenarioSteps {
 
     public static RequestSpecification getSpecWithExtraHeaders() {
         specs = new RequestSpecBuilder()
-        .setContentType(ContentType.JSON)
+                .setContentType(ContentType.JSON)
         .setBaseUri(EnvironmentConstants.API_BASE_URL)
         .build();
         return specs;

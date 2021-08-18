@@ -12,7 +12,7 @@ import com.steps.api.BoardApiSteps;
 import com.steps.api.CardApiSteps;
 import com.steps.api.ListApiSteps;
 
-public class BaseTest extends TestCase {
+public class BaseApiTest extends TestCase {
     @Steps
     protected BoardApiSteps boardApiSteps;
     @Steps

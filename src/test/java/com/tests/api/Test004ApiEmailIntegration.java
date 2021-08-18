@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 import com.tools.constants.EnvironmentConstants;
 
 @RunWith(SerenityRunner.class)
-public class Test004ApiEmailIntegration extends BaseTest {
+public class Test004ApiEmailIntegration extends BaseApiTest {
     @Test
     public void test004ApiEmailIntegration() {
         boardApiSteps.inviteMemberToBoard(boardName, EnvironmentConstants.SECONDARY_USERNAME);

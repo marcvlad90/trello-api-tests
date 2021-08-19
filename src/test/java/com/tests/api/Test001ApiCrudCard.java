@@ -15,6 +15,7 @@ public class Test001ApiCrudCard extends BaseApiTest {
     @Test
     public void test001CrudCard() {
         listApiSteps.addListInBoard(boardName, listName);
+
         cardApiSteps.createCard(listName, cardName);
         cardApiSteps.verifyCardIsPresent(cardName);
 

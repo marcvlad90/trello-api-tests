@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Board extends Credentials {
+public class Board extends UserAccess {
     @Override
     public String toString() {
         return "Board [name=" + name + ", id=" + id + ", email=" + email + "]";

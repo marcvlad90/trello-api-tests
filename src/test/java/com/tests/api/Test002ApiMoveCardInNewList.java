@@ -16,8 +16,8 @@ public class Test002ApiMoveCardInNewList extends BaseApiTest {
     public void test002MoveCardInNewList() {
         listApiSteps.addListInBoard(boardName, listName);
         cardApiSteps.createCard(listName, cardName);
-
         listApiSteps.addListInBoard(boardName, newListName);
+
         cardApiSteps.updateCardList(cardName, newListName);
         cardApiSteps.verifyCardIsPresent(cardName);
     }

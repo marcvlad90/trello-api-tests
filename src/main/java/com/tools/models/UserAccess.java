@@ -2,12 +2,12 @@ package com.tools.models;
 
 import com.tools.constants.EnvironmentConstants;
 
-public class Credentials {
+public class UserAccess {
     private String key, token;
 
-    public Credentials() {
-        this.setKey(EnvironmentConstants.APP_KEY);
-        this.setToken(EnvironmentConstants.TOKEN);
+    public UserAccess() {
+        this.setKey(EnvironmentConstants.API_KEY);
+        this.setToken(EnvironmentConstants.API_TOKEN);
     }
 
     public String getKey() {

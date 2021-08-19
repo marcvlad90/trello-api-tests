@@ -25,8 +25,8 @@ public class AbstractApiSteps extends ScenarioSteps {
 
     public static Map<String, String> getCommonBodyParams() {
         Map<String, String> bodyParams = new HashMap<String, String>();
-        bodyParams.put("key", EnvironmentConstants.APP_KEY);
-        bodyParams.put("token", EnvironmentConstants.TOKEN);
+        bodyParams.put("key", EnvironmentConstants.API_KEY);
+        bodyParams.put("token", EnvironmentConstants.API_TOKEN);
         return bodyParams;
     }
 

@@ -1,7 +1,5 @@
 package com.steps.api;
 
-import java.util.Map;
-
 import net.thucydides.core.annotations.Step;
 
 import org.junit.Assert;
@@ -23,10 +21,10 @@ public class BoardApiSteps extends AbstractApiSteps {
 
     @Step
     public void inviteMemberToBoard(String boardName, String email) {
-        Board board = boardDao.getBoardByName(boardName);
-        Map<String, String> bodyParams = getCommonBodyParams();
-        bodyParams.put("email", email);
-        updateResource(ApiUrlConstants.BOARD_MEMBER_INVITATION, bodyParams, board.getId());
+        Board boardRequest = boardDao.getBoardByName(boardName);
+        boardRequest.setEmail(email);
+
+        updateResource(ApiUrlConstants.BOARD_MEMBER_INVITATION, boardRequest, boardRequest.getId());
     }
 
     @Step
@@ -50,9 +48,7 @@ public class BoardApiSteps extends AbstractApiSteps {
     @Step
     public void createBoard(String name) {
         Board boardRequest = BoardFactory.getBoardInstance(name);
-        Map<String, String> bodyParams = getCommonBodyParams();
-        bodyParams.put("name", boardRequest.getName());
-        Board boardResponse = createResource(ApiUrlConstants.BOARD_CREATE, bodyParams, Board.class);
+        Board boardResponse = createResource(ApiUrlConstants.BOARD_CREATE, boardRequest, Board.class);
 
         InstanceUtils.mergeObjects(boardRequest, boardResponse);
         boardDao.saveBoard(boardRequest);

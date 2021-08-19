@@ -1,7 +1,5 @@
 package com.steps.api;
 
-import java.util.Map;
-
 import net.thucydides.core.annotations.Step;
 import net.thucydides.core.annotations.Steps;
 
@@ -29,10 +27,8 @@ public class CardApiSteps extends AbstractApiSteps {
     public void createCard(String listName, String cardName) {
         List list = listDao.getListByName(listName);
         Card cardRequest = CardFactory.getCardInstance(list.getId(), cardName);
-        Map<String, String> bodyParams = getCommonBodyParams();
-        bodyParams.put("name", cardRequest.getName());
-        bodyParams.put("idList", cardRequest.getBoardListId());
-        Card cardResponse = createResource(ApiUrlConstants.CARD_CREATE, bodyParams, Card.class);
+
+        Card cardResponse = createResource(ApiUrlConstants.CARD_CREATE, cardRequest, Card.class);
 
         InstanceUtils.mergeObjects(cardRequest, cardResponse);
         cardDao.saveCard(cardRequest);
@@ -43,9 +39,8 @@ public class CardApiSteps extends AbstractApiSteps {
         Card cardRequest = cardDao.getCardByName(cardName);
         List list = listDao.getListByName(newListName);
         cardRequest.setBoardListId(list.getId());
-        Map<String, String> bodyParams = getCommonBodyParams();
-        bodyParams.put("idList", list.getId());
-        updateResource(ApiUrlConstants.CARD_GET, bodyParams, cardRequest.getId());
+
+        updateResource(ApiUrlConstants.CARD_GET, cardRequest, cardRequest.getId());
 
         cardDao.updateCard(cardName, cardRequest);
     }
@@ -53,10 +48,9 @@ public class CardApiSteps extends AbstractApiSteps {
     @Step
     public void updateCardName(String name, String newName) {
         Card cardRequest = cardDao.getCardByName(name);
-        Map<String, String> bodyParams = getCommonBodyParams();
-        bodyParams.put("name", newName);
+        cardRequest.setName(newName);
 
-        updateResource(ApiUrlConstants.CARD_GET, bodyParams, cardRequest.getId());
+        updateResource(ApiUrlConstants.CARD_GET, cardRequest, cardRequest.getId());
 
         cardRequest.setName(newName);
         cardDao.updateCard(newName, cardRequest);

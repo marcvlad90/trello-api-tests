@@ -3,18 +3,12 @@ package com.tools.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tools.constants.EnvironmentConstants;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class List extends Credentials {
     private String boardId, name, position, id;
     private boolean closed;
-
-    public List() {
-        this.setKey(EnvironmentConstants.APP_KEY);
-        this.setToken(EnvironmentConstants.TOKEN);
-    }
 
     @Override
     public int hashCode() {

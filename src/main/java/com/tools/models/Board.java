@@ -2,16 +2,10 @@ package com.tools.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.tools.constants.EnvironmentConstants;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Board extends Credentials {
-    public Board() {
-        this.setKey(EnvironmentConstants.APP_KEY);
-        this.setToken(EnvironmentConstants.TOKEN);
-    }
-
     @Override
     public String toString() {
         return "Board [name=" + name + ", id=" + id + ", email=" + email + "]";

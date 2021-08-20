@@ -4,7 +4,7 @@ import net.thucydides.core.annotations.Step;
 
 import org.junit.Assert;
 
-import com.dao.board.BoardDao;
+import com.dao.board.BoardAbstractDao;
 import com.google.inject.Inject;
 import com.tools.constants.ApiUrlConstants;
 import com.tools.email.EmailProcessor;
@@ -17,7 +17,7 @@ import com.tools.utils.InstanceUtils;
 public class BoardApiSteps extends AbstractApiSteps {
     private static final long serialVersionUID = 1L;
     @Inject
-    public BoardDao boardDao;
+    public BoardAbstractDao boardDao;
 
     @Step
     public void inviteMemberToBoard(String boardName, String email) {

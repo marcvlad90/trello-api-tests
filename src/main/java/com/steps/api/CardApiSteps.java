@@ -5,8 +5,8 @@ import net.thucydides.core.annotations.Steps;
 
 import org.junit.Assert;
 
-import com.dao.card.CardDao;
-import com.dao.list.ListDao;
+import com.dao.card.CardAbstractDao;
+import com.dao.list.ListAbstractDao;
 import com.google.inject.Inject;
 import com.tools.constants.ApiUrlConstants;
 import com.tools.factories.CardFactory;
@@ -19,9 +19,9 @@ public class CardApiSteps extends AbstractApiSteps {
     @Steps
     private BoardApiSteps boardApiSteps;
     @Inject
-    ListDao listDao;
+    ListAbstractDao listDao;
     @Inject
-    CardDao cardDao;
+    CardAbstractDao cardDao;
 
     @Step
     public void createCard(String listName, String cardName) {

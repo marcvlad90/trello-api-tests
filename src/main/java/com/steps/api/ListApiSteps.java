@@ -4,8 +4,8 @@ import net.thucydides.core.annotations.Step;
 
 import org.junit.Assert;
 
-import com.dao.board.BoardDao;
-import com.dao.list.ListDao;
+import com.dao.board.BoardAbstractDao;
+import com.dao.list.ListAbstractDao;
 import com.google.inject.Inject;
 import com.tools.constants.ApiUrlConstants;
 import com.tools.factories.ListFactory;
@@ -16,9 +16,9 @@ import com.tools.utils.InstanceUtils;
 public class ListApiSteps extends AbstractApiSteps {
     private static final long serialVersionUID = 1L;
     @Inject
-    private BoardDao boardDao;
+    private BoardAbstractDao boardDao;
     @Inject
-    public ListDao listDao;
+    public ListAbstractDao listDao;
 
     @Step
     public void createList(String boardName, String listName) {

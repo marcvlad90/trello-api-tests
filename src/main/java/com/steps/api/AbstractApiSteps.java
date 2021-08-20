@@ -48,19 +48,19 @@ public class AbstractApiSteps extends ScenarioSteps {
                 .extract().as(responseClass);
     }
 
-    protected static String getNotFoundResourceMessage(String path, Object bodyParams, Object... params) {
+    protected static String getNotFoundResourceMessage(String path, Object requestBody, Object... params) {
         return given().relaxedHTTPSValidation()
                 .spec(getSpecWithExtraHeaders())
-                .body(bodyParams)
+                .body(requestBody)
                 .when().get(path, params)
                 .then()
                 .assertThat().statusCode(404).extract().asString();
     }
 
-    protected static void updateResource(String path, Object bodyParams, Object... params) {
+    protected static void updateResource(String path, Object requestBody, Object... params) {
         given().relaxedHTTPSValidation()
         .spec(getSpecWithExtraHeaders())
-        .body(bodyParams)
+        .body(requestBody)
         .when().put(path, params)
         .then()
         .assertThat().statusCode(anyOf(is(201), is(200), is(302)));
@@ -75,10 +75,10 @@ public class AbstractApiSteps extends ScenarioSteps {
         .assertThat().statusCode(anyOf(is(201), is(200), is(302)));
     }
 
-    protected static <T> T createResource(String path, Object bodyParams, Class<T> responseClass) {
+    protected static <T> T createResource(String path, Object requestBody, Class<T> responseClass) {
         return given().relaxedHTTPSValidation()
                 .spec(getSpecWithExtraHeaders())
-                .body(bodyParams)
+                .body(requestBody)
                 .when().post(path)
                 .then()
                 .assertThat().statusCode(anyOf(is(201), is(200), is(302)))

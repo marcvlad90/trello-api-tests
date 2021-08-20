@@ -23,8 +23,8 @@ public class BaseApiTest extends TestCase {
 
     @Before
     public void setup() {
-        System.setProperty("https.proxyHost", "localhost");
-        System.setProperty("https.proxyPort", "8080");
+        //        System.setProperty("https.proxyHost", "localhost");
+        //        System.setProperty("https.proxyPort", "8080");
         System.setProperty("env", "test-env");
         boardApiSteps.createBoard(boardName);
     }

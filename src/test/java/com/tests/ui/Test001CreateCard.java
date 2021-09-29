@@ -12,24 +12,20 @@ import org.junit.runner.RunWith;
 @RunWith(SerenityRunner.class)
 public class Test001CreateCard extends BaseTest {
     private String firstListName = RandomString.make(10);
-    private String secondListName = RandomString.make(10);
     private String cardName = RandomString.make(10);
 
     @Before
     public void dataPrep() {
         boardApiSteps.createBoard(boardName);
         listApiSteps.addListInBoard(boardName, firstListName);
-        listApiSteps.addListInBoard(boardName, secondListName);
         loginSteps.login();
         boardsSteps.openBoard(boardName);
     }
 
     @Test
     public void test001CreateCard() {
-        boardSteps.addCardInTheList(firstListName, cardName);
-        boardSteps.addCardInTheList(secondListName, cardName);
+        boardSteps.createCardInTheList(firstListName, cardName);
         boardSteps.checkThatCardIsPresentInTheList(firstListName, cardName);
-        boardSteps.checkThatCardIsPresentInTheList(secondListName, cardName);
     }
 
     @Override

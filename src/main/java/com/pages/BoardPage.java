@@ -12,7 +12,7 @@ public class BoardPage extends GeneralPage {
         return getDriver().findElement(By.xpath("//div[contains(@class,'list-wrapper')][div/div/textarea[text()='" + name + "']]"));
     }
 
-    public void createCardInTheList(String listName, String cardName) {
+    public void createCardInTheList(String cardName, String listName) {
         getListContainer(listName).findElement(By.cssSelector(".icon-add")).click();
         cardTitleInput.sendKeys(cardName);
         getElementWithValueAttribute("Add card").click();
@@ -22,7 +22,7 @@ public class BoardPage extends GeneralPage {
         return getListContainer(listName).findElement(By.xpath("//div[contains(@class,'list-card')][span[text()='" + cardName + "']]"));
     }
 
-    public boolean isCardDisplayed(String listName, String cardName) {
+    public boolean isCardDisplayedInTheList(String cardName, String listName) {
         return getCardContainer(listName, cardName).isDisplayed();
     }
 }

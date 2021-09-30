@@ -13,7 +13,7 @@ public class Test003ApiCrudList extends BaseApiTest {
 
     @Test
     public void test003CrudList() {
-        listApiSteps.addListInBoard(boardName, listName);
+        listApiSteps.createListInBoard(boardName, listName);
         listApiSteps.verifyListIsPresent(listName);
 
         listApiSteps.updateListName(listName, listNewName);

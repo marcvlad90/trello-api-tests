@@ -67,7 +67,7 @@ public class ListApiSteps extends AbstractApiSteps {
     }
 
     @Step
-    public void addListInBoard(String boardName, String listName) {
+    public void createListInBoard(String boardName, String listName) {
         Board board = boardDao.getBoardByName(boardName);
         List listRequest = ListFactory.getListInstance(board.getId(), listName);
 

@@ -12,12 +12,12 @@ public class BoardSteps extends ScenarioSteps {
     private BoardPage boardPage;
 
     @Step
-    public void createCardInTheList(String listName, String cardName) {
-        boardPage.createCardInTheList(listName, cardName);
+    public void createCardInTheList(String cardName, String listName) {
+        boardPage.createCardInTheList(cardName, listName);
     }
 
     @Step
-    public void checkThatCardIsPresentInTheList(String listName, String cardName) {
-        Assert.assertTrue(String.format("%s card was not found!", cardName), boardPage.isCardDisplayed(listName, cardName));
+    public void checkThatCardIsPresentInTheList(String cardName, String listName) {
+        Assert.assertTrue(String.format("%s card was not found!", cardName), boardPage.isCardDisplayedInTheList(cardName, listName));
     }
 }
